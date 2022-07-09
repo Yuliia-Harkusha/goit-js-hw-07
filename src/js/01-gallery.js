@@ -27,7 +27,16 @@ function selectImg(evt) {
     if (!evt.target.classList.contains("gallery__image")) {
         return;
     }
-    basicLightbox.create(`
+    const instance = basicLightbox.create(`
 		<img src="${evt.target.dataset.source}">
-	`).show();
+	`);
+    instance.show();
+};
+
+
+window.addEventListener('keydown', onEscClick);
+
+function onEscClick(evt) {
+    if (evt.code === 'Escape' && basicLightbox.visible())
+        return basicLightbox.close();
 };
