@@ -22,21 +22,22 @@ gallery.insertAdjacentHTML("beforeend", galleryList);
 
 gallery.addEventListener('click', selectImg);
 
+
 function selectImg(evt) {
     evt.preventDefault();
     if (!evt.target.classList.contains("gallery__image")) {
         return;
     }
+
     const instance = basicLightbox.create(`
 		<img src="${evt.target.dataset.source}">
 	`);
     instance.show();
-};
 
+    window.addEventListener('keydown', onEscClick);
 
-window.addEventListener('keydown', onEscClick);
-
-function onEscClick(evt) {
-    if (evt.code === 'Escape' && basicLightbox.visible())
-        return basicLightbox.close();
-};
+    function onEscClick(evt) {
+        if (evt.code === 'Escape' && basicLightbox.visible())
+         return instance.close();
+    }
+}; 

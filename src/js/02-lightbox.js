@@ -15,11 +15,10 @@ const galleryList = galleryItems.map(({ preview, original, description }) =>
 
 gallery.insertAdjacentHTML("beforeend", galleryList);
 
-const lightbox = new SimpleLightbox('.gallery__item', {
+const lightbox = new SimpleLightbox('.gallery__item a', {
     captions: true,
     captionSelector: 'img',
     captionsData: 'alt',
     captionPosition: 'bottom',
     captionDelay: 250,
-
 });
