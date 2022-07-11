@@ -22,22 +22,31 @@ gallery.insertAdjacentHTML("beforeend", galleryList);
 
 gallery.addEventListener('click', selectImg);
 
+const instance = basicLightbox.create(`
+		<img class='gallery__image' src=''>`, {
+
+    onShow: instance => {
+        window.addEventListener('keydown', onEscClick);
+  },
+      
+    onClose: instance => {
+        window.removeEventListener('keydown', onEscClick);
+  },
+    });
+
 
 function selectImg(evt) {
-    evt.preventDefault();
-    if (!evt.target.classList.contains("gallery__image")) {
-        return;
-    }
+  evt.preventDefault();
+  if (!evt.target.classList.contains("gallery__image")) {
+    return;
+  }
+  instance.element().querySelector('img').src = evt.target.dataset.source;
 
-    const instance = basicLightbox.create(`
-		<img src="${evt.target.dataset.source}">
-	`);
-    instance.show();
+  instance.show();
+};
 
-    window.addEventListener('keydown', onEscClick);
+function onEscClick(evt) {
+    if (evt.code === 'Escape' && instance.visible())
+    return instance.close();
+};
 
-    function onEscClick(evt) {
-        if (evt.code === 'Escape' && basicLightbox.visible())
-         return instance.close();
-    }
-}; 
